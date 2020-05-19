@@ -10,7 +10,7 @@ public class Game {
     public Car car;
     private IPlayerManager manager;
     private int totalCheckpoints;
-    private int currentCheckpoint = 1;
+    public int currentCheckpoint = 1;
     public int timer;
     public double colTime = 0.0;
     public boolean isDone;

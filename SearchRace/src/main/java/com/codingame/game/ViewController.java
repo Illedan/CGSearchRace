@@ -12,6 +12,7 @@ public class ViewController {
     private TooltipModule tooltipModule;
     private Sprite car;
     private Text Timer;
+    private Text CheckpointTarget;
     private ArrayList<Sprite> checkpoints = new ArrayList<>();
     private int currentCheck = 0;
 
@@ -79,6 +80,14 @@ public class ViewController {
                 .setAnchor(0)
                 .setFontSize(50)
                 .setFillColor(0xffffff);
+
+        CheckpointTarget = module.createText("1")
+                .setX(Width-10)
+                .setY(10)
+                .setAnchorX(1)
+                .setAnchorY(0)
+                .setFontSize(50)
+                .setFillColor(0xffffff);
     }
 
     public void onRound(){
@@ -95,6 +104,7 @@ public class ViewController {
             prev.setTint(0xffffff);
             currentCheck = nextCheck;
             module.commitEntityState(Math.min(1.0, game.colTime), next, prev);
+            CheckpointTarget.setText(currentCheck+" ("+game.currentCheckpoint+")");
         }
     }
 }
