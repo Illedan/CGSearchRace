@@ -20,7 +20,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
 
     @Override
     public void init() {
-        gameManager.setFrameDuration(500);
+        gameManager.setFrameDuration(100);
         gameManager.setMaxTurns(600);
         gameManager.setTurnMaxTime(50);
 
