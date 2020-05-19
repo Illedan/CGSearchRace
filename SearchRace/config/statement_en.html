@@ -19,19 +19,36 @@
     </h1>
     <div>
       <div class="statement-rules-content">
-        The player each control a car racing through 3 rounds of checkpoints.
-        The circuit of the race is made up of checkpoints. To complete one lap, your car must pass through each one in order and back through the start.
-        The checkpoints are given in repeating order in the inputs.
+        You are controlling a car racing through a series of checkpoints. Each checkpoint is located on position indicated with <var>x</var> and <var>y</var>.
+        Which checkpoint to target is given by <var>checkpointId</var> pointing to a value in the checkpoints given as initial input.
+        Checkpoints are repeated when given as inputs
         The game is played on a map 16000 units wide and 9000 units high. The coordinate X=0, Y=0 is the top left pixel.
         <br>
+        <br>
         The checkpoints work as follows:
-        - The checkpoints are circular, with a radius of 600 units.
-        - The disposition of the checkpoints is selected randomly for each race.
+        <ul>
+          <li>The checkpoints are circular, with a radius of 600 units.</li>
+          <li>The disposition of the checkpoints is selected randomly for each race.</li>
+        </ul>
+        <br>
         <br>
         You <strong>lose</strong> if:
         <ul>
           <li>You use more than 600 rounds.</li>
           <li>You do not supply a valid sequence of actions.</li>
+        </ul>
+
+        You <strong>Win</strong> if:
+        <ul>
+          <li>You visit all checkpoints as given by inputs before the time is out!</li>
+        </ul>
+
+        <br>
+        The car work as follows:
+        <ul>
+          <li>Every turn it takes a new command given a position and a <var>THRUST</var> indicating where to drive.</li>
+          <li>It will at max turn 18 degrees from where the current heading are.</li>
+          <li>After a new thrust it given the car will drive for 1 turn checking for collisions with the next checkpoint along the way.</li>
         </ul>
       </div>
     </div>
@@ -47,18 +64,7 @@
       https://github.com/Illedan/CGSearchRace
     </div>
   </div>
-  <!-- WARNING -->
-  <div class="statement-section statement-warning">
-    <h1>
-      <span class="icon icon-warning">&nbsp;</span>
-      <span>Note</span>
-    </h1>
-    <div class="statement-warning-content">
-      <b>Don’t forget to run the tests by launching them from the “Test cases” window</b>. You can submit at any time
-      to recieve a score against the training validators. <b>You can submit as many times as you like</b>.
-      <br>
-    </div>
-  </div>
+
   <!-- PROTOCOL -->
   <div class="statement-section statement-protocol">
     <h1>
@@ -71,82 +77,53 @@
         standard output one line with ...</div>
     </div>
 
-    <!-- Protocol block -->
     <div class="blk">
-      <div class="title">Input</div>
+      <div class="title">Initialization input</div>
       <div class="text">
-        <p><span class="statement-lineno">Line 1: </span>one string <var>...</var>, the ...</p>
-      </div>
-    </div>
-
-    <!-- Protocol block -->
-    <div class="blk">
-      <div class="title">Output</div>
-      <div class="text">
-        <span class="statement-lineno">A single line</span> containing ...
+        <span class="statement-lineno">First line: </span>an integer <var>checkpoints</var>, the amount of all checkpoints to pass. (all checkpoints repeated 3 times for convencience)
+        <span class="statement-lineno">Next <var>checkpoints</var> lines</span>: one line per checkpoint.
+        <br>
+        <br> Each checkpoint is represented by <const>2</const> integers: <var>x</var>, <var>y</var>.
         <br>
       </div>
     </div>
 
-    <!-- PROTOCOL -->
-    <div class="statement-section statement-protocol">
-      <h1>
-        <span class="icon icon-protocol">&nbsp;</span>
-        <span>Game Input</span>
-      </h1>
-      <!-- Protocol block -->
-      <div class="blk">
-        <div class="title">Initialization input</div>
-        <div class="text">
-          <span class="statement-lineno">First line: </span>an integer <var>checkpoints</var>, the amount of all checkpoints to pass. (all checkpoints repeated 3 times for convencience)
-          <span class="statement-lineno">Next <var>checkpoints</var> lines</span>: one line per checkpoint.
-          <br>
-          <br> Each checkpoint is represented by <const>2</const> integers: <var>x</var>, <var>y</var>.
-          <br>
-        </div>
-      </div>
+    <div class="blk">
+    <div class="title">Input for one game turn</div>
+      <span class="statement-lineno">One line of <const>6</const> integers: <var>checkpointId</var>, <var>x</var>, <var>y</var>, <var>vx</var>, <var>vy</var> and <var>angle</var>.
+              <br>
+              <var>checkpointId</var> indicates the number of the next checkpoint as given in inputs.
+              <var>x</var>, <var>y</var> for the entity's position.
+              <br>
+              <var>vx</var>, <var>vy</var> for the entity's speed vector.
+              <br>
+              <var>angle</var>. Heading angle in degrees between <const>0</const> and <const>360</const> for the Car.
+              <br>
+      </span>
+    </div>
 
-      <!-- Protocol block -->
-      <div class="blk">
-
-        <div class="title">Input for one game turn</div>
-        <div class="text">
-          <span class="statement-lineno">One line of <const>6</const> integers: <var>checkpointId</var>, <var>x</var>, <var>y</var>, <var>vx</var>, <var>vy</var> and <var>angle</var>.
-          <br>
-          <var>checkpointId</var> indicates the number of the next checkpoint as given in inputs.
-          <var>x</var>, <var>y</var> for the entity's position.
-          <br>
-          <var>vx</var>, <var>vy</var> for the entity's speed vector.
-          <br>
-          <var>angle</var>. Heading angle in degrees between <const>0</const> and <const>360</const> for the Car.
-          <br>
-        </div>
-      </div>
-
-      <!-- Protocol block -->
-      <div class="blk">
-        <div class="title">Output for one game turn</div>
-        <div class="text"><span class="statement-lineno">One line for your car</span>: three integers <var>X</var>, <var>Y</var> and <var>thrust</var>
-          <br> You may append the output with a message which we be displayed above the car.
-          <br>
-          <br>
-          <span class="statement-lineno">Optional debugging information</span>
-          <br> If the message is <action>debug</action> once, the game summary will contain additional information throughout the game. The referee will provide a double with the collision time occuring the previous round (or > 1.0 if no collision occured)
-          <br>
-          <span class="statement-lineno">Alternative output format</span>
-          <br> For convenience purposes, you may also output your actions in the following format: <action>EXPERT rotationAngle thrust message</action>.
-        </div>
-      </div>
-
-      <!-- Protocol block -->
-      <div class="blk">
-        <div class="title">Constraints</div>
-        <div class="text">
-          <const>0</const> <= <var>thrust</var> <= <const>200</const>
-          <br> Response time for the first turn ≤ <const>1000</const> ms
-          <br> Response time per turn ≤ <const>50</const> ms
-          <br>
-        </div>
+    <div class="blk">
+      <div class="title">Output for one game turn</div>
+      <div class="text"><span class="statement-lineno">One line for your car</span>: three integers <var>X</var>, <var>Y</var> and <var>thrust</var>
+        <br> You may append the output with a message which we be displayed above the car.
+        <br>
+        <br>
+        <span class="statement-lineno">Optional debugging information</span>
+        <br> If the message is <action>debug</action> once, the game summary will contain additional information throughout the game. The referee will provide a double with the collision time occuring the previous round (or > 1.0 if no collision occured)
+        <br>
+        <span class="statement-lineno">Alternative output format</span>
+        <br> For convenience purposes, you may also output your actions in the following format: <action>EXPERT rotationAngle thrust message</action>.
       </div>
     </div>
+
+    <div class="blk">
+      <div class="title">Constraints</div>
+      <div class="text">
+        <const>0</const> <= <var>thrust</var> <= <const>200</const>
+        <br> Response time for the first turn ≤ <const>1000</const> ms
+        <br> Response time per turn ≤ <const>50</const> ms
+        <br>
+      </div>
+    </div>
+  </div>
 </div>
