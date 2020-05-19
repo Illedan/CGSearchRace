@@ -1,0 +1,20 @@
+read checkpoints:int
+loop checkpoints read x:int y:int
+gameloop
+read checkpointId:int x:int y:int vx:int vy:int angle:int
+
+STATEMENT
+Made by Illedan
+
+INPUT
+checkpoints: Count of checkpoints to read
+x: Position X
+y: Position Y
+checkpointId: Id of the checkpoint to lookup in the checkpoints input, initially 1
+vx: horizontal speed. Positive is right
+vy: vertical speed. Positive is downwards
+angle: facing angle of this car
+
+
+OUTPUT
+X Y THRUST MESSAGE
