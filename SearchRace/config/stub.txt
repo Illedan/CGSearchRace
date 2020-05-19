@@ -3,6 +3,7 @@ loop checkpoints read x:int y:int
 gameloop
 read checkpointId:int x:int y:int vx:int vy:int angle:int
 write 5000 5000 200 message
+
 STATEMENT
 Made by Illedan
 

@@ -44,6 +44,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
             viewController.onRound();
         }catch (Exception e){
             endGame(false, 700);
+            addGameSummary(e.getMessage());
         }
     }
 

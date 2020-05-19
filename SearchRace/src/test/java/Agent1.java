@@ -11,14 +11,25 @@ public class Agent1 {
             System.err.println(line[0] + " " + line[1]);
             targets.add(new Point(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         }
+        double dist = 100000.0;
         while (true) {
             String s = scanner.nextLine();
             System.err.println(s);
             String[] input = s.split(" ");
             // id x y vx vy angle
             int target = Integer.parseInt(input[0]);
-            Point checkpoint = targets.get(target);
-            System.out.println(checkpoint.x + " " + checkpoint.y + " 80");
+            int x = Integer.parseInt(input[1]);
+            int y = Integer.parseInt(input[2]);
+            int vx = Integer.parseInt(input[3]);
+            int vy = Integer.parseInt(input[4]);
+            Point targ = targets.get(target);
+
+            Point current = new Point(x, y);
+            Point in3 = new Point((int)(x+vx*4), (int)(y+vy*4));
+            if(dist-in3.distance(targ) < 0 && in3.distance(current) > 300){
+                System.out.println(targ.x + " " + targ.y + " 0");
+            }else
+                System.out.println(targ.x + " " + targ.y + " 200");
         }
     }
 
@@ -28,5 +39,10 @@ public class Agent1 {
             this.x = x;
             this.y = y;
         }
+
+        double distance(Point p) {
+            return Math.sqrt((this.x - p.x) * (this.x - p.x) + (this.y - p.y) * (this.y - p.y));
+        }
+
     }
 }
