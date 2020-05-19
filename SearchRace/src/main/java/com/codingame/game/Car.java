@@ -4,6 +4,7 @@ public class Car extends Unit {
     public double angle;
     public String message;
     public boolean debug;
+    public int thrust = 0;
     Car(double x, double y, double angle) {
         super(x, y);
         this.angle = angle;
@@ -18,7 +19,7 @@ public class Car extends Unit {
 
         if(splitted[0].equals("EXPERT")){
             int angle = Integer.parseInt(splitted[1]);
-            int thrust = Integer.parseInt(splitted[2]);
+            thrust = Integer.parseInt(splitted[2]);
             if(thrust < 0 || thrust > Constants.CAR_MAX_THRUST) {
                 manager.addGameSummary("Invalid thrust. Please keep between 0 and " + Constants.CAR_MAX_THRUST);
                 throw new Exception( "Invalid thrust");
@@ -45,7 +46,7 @@ public class Car extends Unit {
         else{
             int x = Integer.parseInt(splitted[0]);
             int y = Integer.parseInt(splitted[1]);
-            int thrust = Integer.parseInt(splitted[2]);
+            thrust = Integer.parseInt(splitted[2]);
             if(thrust < 0 || thrust > Constants.CAR_MAX_THRUST) {
                 manager.addGameSummary("Invalid thrust. Please keep between 0 and " + Constants.CAR_MAX_THRUST);
                 throw new Exception( "Invalid thrust");

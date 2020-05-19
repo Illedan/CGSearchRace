@@ -12,6 +12,7 @@ public class Agent1 {
             targets.add(new Point(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         }
         double dist = 100000.0;
+        int z = 0;
         while (true) {
             String s = scanner.nextLine();
             System.err.println(s);
@@ -25,11 +26,11 @@ public class Agent1 {
             Point targ = targets.get(target);
 
             Point current = new Point(x, y);
-            Point in3 = new Point((int)(x+vx*4), (int)(y+vy*4));
-            if(dist-in3.distance(targ) < 0 && in3.distance(current) > 300){
+            Point in3 = new Point((int)(x+vx*3), (int)(y+vy*3));
+            if(dist-in3.distance(targ) < 0 && in3.distance(current) > 150 ||z++ % 5 == 0){
                 System.out.println(targ.x + " " + targ.y + " 0");
             }else
-                System.out.println(targ.x + " " + targ.y + " 200");
+                System.out.println(targ.x + " " + targ.y + " 150");
         }
     }
 

@@ -26,3 +26,4 @@ hs_err_pid*
 *bin
 *obj
 *.DS_STORE
+*target

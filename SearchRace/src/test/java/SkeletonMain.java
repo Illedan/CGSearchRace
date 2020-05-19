@@ -13,7 +13,7 @@ public class SkeletonMain {
          gameRunner.setAgent(Agent1.class);
 
         // Sets a test case
-         gameRunner.setTestCase("test36.json");
+         gameRunner.setTestCase("test1.json");
 
         // Another way to add a player
         // gameRunner.addAgent("python3 /home/user/player.py");

@@ -10,7 +10,7 @@ public class Game {
     public Car car;
     private IPlayerManager manager;
     private int totalCheckpoints;
-    public int currentCheckpoint = 1;
+    public int currentCheckpoint = 0;
     public int timer;
     public double colTime = 0.0;
     public boolean isDone;
@@ -34,10 +34,8 @@ public class Game {
 
     public void onRound() throws Exception {
         if(isDone) {
-            car.move(1.0);
             manager.endGame(true, Utility.roundToTwoDecimals(timer + colTime));
             return;
-
         }
         manager.sendData(getData());
         manager.execute();
@@ -60,7 +58,7 @@ public class Game {
             if(col.time >= 0.0 && col.time <= 1.0){
                 currentCheckpoint++;
                 colTime = col.time;
-                if(currentCheckpoint > totalCheckpoints){
+                if(currentCheckpoint >= totalCheckpoints){
                     isDone = true;
                 }
             }
@@ -68,10 +66,10 @@ public class Game {
     }
 
     private String[] getInitialData(){
-        String[] data = new String[1+totalCheckpoints+1];
-        data[0] = String.valueOf(totalCheckpoints+1);
-        int current = 0;
-        for(int i = 0; i <= totalCheckpoints; i++){
+        String[] data = new String[1+totalCheckpoints];
+        data[0] = String.valueOf(totalCheckpoints);
+        int current = 1;
+        for(int i = 0; i < totalCheckpoints; i++){
             Checkpoint check = checkpoints.get((current++) % checkpoints.size());
             data[i+1] = (int)check.x + " " + (int)check.y;
         }
@@ -93,10 +91,10 @@ public class Game {
     }
 
     private Checkpoint getNextCheckpoint(){
-        return checkpoints.get(currentCheckpoint % checkpoints.size());
+        return checkpoints.get(getNextCheckpointId());
     }
 
     public int getNextCheckpointId(){
-        return currentCheckpoint % checkpoints.size();
+        return (currentCheckpoint+1) % checkpoints.size();
     }
 }
