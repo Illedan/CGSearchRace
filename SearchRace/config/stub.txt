@@ -12,6 +12,8 @@ checkpoints: Count of checkpoints to read
 x: Position X
 y: Position Y
 checkpointId: Id of the checkpoint to lookup in the checkpoints input, initially 1
+x: Position X
+y: Position Y
 vx: horizontal speed. Positive is right
 vy: vertical speed. Positive is downwards
 angle: facing angle of this car

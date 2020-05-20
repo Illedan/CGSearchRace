@@ -5,14 +5,11 @@ import java.util.ArrayList;
 public abstract class Unit extends Point {
     public double vx;
     public double vy;
-    public double radius;
     public double mass = 1.0;
     public double friction;
 
     Unit(double x, double y) {
         super(x, y);
-
-
         vx = 0.0;
         vy = 0.0;
     }
@@ -21,28 +18,6 @@ public abstract class Unit extends Point {
         x += vx * t;
         y += vy * t;
     }
-
-    double getSpeed(){
-        return Math.sqrt(vx*vx+vy*vy);
-    }
-
-    double getSpeedAngle(){
-        return Math.atan2(vy, vx);
-    }
-
-    public void thrust(Point p, int power) {
-        double distance = distance(p);
-
-        // Avoid a division by zero
-        if (Math.abs(distance) <= Constants.EPSILON) {
-            return;
-        }
-
-        double coef = (((double) power) / mass) / distance;
-        vx += (p.x - this.x) * coef;
-        vy += (p.y - this.y) * coef;
-    }
-
 
     public void adjust() {
         x = Utility.truncate(x);

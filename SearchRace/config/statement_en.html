@@ -22,7 +22,8 @@
         You are controlling a car racing through a series of checkpoints. Each checkpoint is located on position indicated with <var>x</var> and <var>y</var>.
         Which checkpoint to target is given by <var>checkpointId</var> pointing to a value in the checkpoints given as initial input.
         <br>
-        Checkpoints are repeated when given as inputs.
+        <br>
+        Checkpoints are repeated when given as inputs. (in difference to CSB)
         <br>
         The game is played on a map <const>16000</const> units wide and <const>9000</const> units high. The coordinate X=0, Y=0 is the top left pixel.
         <br>
@@ -51,6 +52,7 @@
           <li>Every turn it takes a new command given a position and a <var>THRUST</var> indicating where to drive.</li>
           <li>It will at max turn 18 degrees from where the current heading are.</li>
           <li>After a new thrust it given the car will drive for 1 turn checking for collisions with the next checkpoint along the way.</li>
+          <li>Center of a car needs to be inside a checkpoint to visit it.</li>
         </ul>
       </div>
     </div>
@@ -62,6 +64,16 @@
       <span>Expert Rules</span>
     </h1>
     <div class="statement-expert-rules-content">
+      On each turn the car movement are computed this way:
+      <ul>
+        <li>The car rotates to face the target point, with a maximum of 18 degrees..</li>
+        <li>The CAR's facing vector is multiplied by the given thrust value. The result is added to the current speed vector.</li>
+        <li>The speed vector is added to the position of the car.</li>
+        <li>The current speed vector is multiplied by 0.85</li>
+        <li>The speed's values are truncated, angles converted to degrees and rounded and the position's values are rounded to the nearest integer.</li>
+      </ul>
+      <br>
+      <br>
       If you're going to run local simulations, you'll need to look at the <a href="https://github.com/Illedan/CGSearchRace">referee.</a>
     </div>
   </div>
@@ -75,13 +87,13 @@
     <!-- Protocol block -->
     <div class="blk">
       <div class="text">The program must first read the initialization data from standard input. Then, provide to the
-        standard output one line with ...</div>
+        standard output one line with <var>X Y THRUST</var></div>
     </div>
 
     <div class="blk">
       <div class="title">Initialization input</div>
       <div class="text">
-        <span class="statement-lineno">First line: </span>an integer <var>checkpoints</var>, the amount of all checkpoints to pass. (all checkpoints repeated 3 times for convencience)
+        <span class="statement-lineno">First line: </span>an integer <var>checkpoints</var>, the amount of all checkpoints to pass. (all checkpoints repeated 3 times for convenience)
         <span class="statement-lineno">Next <var>checkpoints</var> lines</span>: one line per checkpoint.
         <br>
         <br> Each checkpoint is represented by <const>2</const> integers: <var>x</var>, <var>y</var>.
@@ -120,7 +132,9 @@
     <div class="blk">
       <div class="title">Constraints</div>
       <div class="text">
+        <const>3</const> <= <var>checkpoints</var> <= <const>8</const>
         <const>0</const> <= <var>thrust</var> <= <const>200</const>
+        <const>-18</const> <= <var>angle</var> <= <const>18</const>
         <br> Response time for the first turn ≤ <const>1000</const> ms
         <br> Response time per turn ≤ <const>50</const> ms
         <br>

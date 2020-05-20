@@ -45,7 +45,7 @@ public class ViewController {
                 .setY(getPos(game.car.y));
         car.add(module.createSprite().setImage("car.png")
                 .setBaseHeight(120)
-                .setBaseWidth(80)
+                .setBaseWidth(70)
                 .setAnchor(0.5).setZIndex(10));
         car.setRotation(game.car.angle + Math.PI/2);
         exhaust = module.createGroup().setZIndex(-1).setScale(0);
@@ -103,7 +103,7 @@ public class ViewController {
     }
 
     public void onRound(){
-        exhaust.setScale((double)(game.car.thrust+100)/200.0);
+        exhaust.setScale((double)(game.car.thrust+50)/200.0);
         module.commitEntityState(0, exhaust);
         car.setX(getPos(game.car.x))
             .setY(getPos(game.car.y));
