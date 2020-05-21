@@ -16,7 +16,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
     @Inject private DebugModule debugModule;
     private Game game;
     private ViewController viewController;
-    private double score = 700.0;
+    private double score = 1000;
 
     @Override
     public void init() {
@@ -43,7 +43,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
             game.onRound();
             viewController.onRound();
         }catch (Exception e){
-            endGame(false, 700);
+            endGame(false, 1000);
             addGameSummary(e.getMessage());
         }
     }

@@ -31,29 +31,30 @@
         The checkpoints work as follows:
         <ul>
           <li>The checkpoints are circular, with a radius of 600 units.</li>
-          <li>The disposition of the checkpoints is selected randomly for each race.</li>
+          <li>The disposition of the checkpoints are set by the testcases.</li>
+          <li>No checkpoints are overlapping.</li>
         </ul>
         <br>
-        <br>
-        You <strong>lose</strong> if:
-        <ul>
-          <li>You use more than 600 rounds.</li>
-          <li>You do not supply a valid sequence of actions.</li>
-        </ul>
-
-        You <strong>Win</strong> if:
-        <ul>
-          <li>You visit all checkpoints as given by inputs before the time is out!</li>
-        </ul>
-
         <br>
         The car work as follows:
         <ul>
           <li>Every turn it takes a new command given a position and a <var>THRUST</var> indicating where to drive.</li>
           <li>It will at max turn 18 degrees from where the current heading are.</li>
-          <li>After a new thrust it given the car will drive for 1 turn checking for collisions with the next checkpoint along the way.</li>
-          <li>Center of a car needs to be inside a checkpoint to visit it.</li>
+          <li>When the heading is set, car uses the given <var>thrust</var> to drive in the new direction.</li>
+          <li>To enter a checkpoint, the center of a car must be within <const>600</const> units of the checkpoints center.</li>
         </ul>
+        <br>
+        You <strong>lose</strong> if:
+        <ul>
+          <li>You use more than 600 rounds.</li>
+          <li>You do not supply a valid action.</li>
+        </ul>
+
+        You <strong>win</strong> if:
+        <ul>
+          <li>You visit all checkpoints as given by inputs before the time is out!</li>
+        </ul>
+        <br>
       </div>
     </div>
   </div>
@@ -66,13 +67,14 @@
     <div class="statement-expert-rules-content">
       On each turn the car movement are computed this way:
       <ul>
-        <li>The car rotates to face the target point, with a maximum of 18 degrees..</li>
-        <li>The CAR's facing vector is multiplied by the given thrust value. The result is added to the current speed vector.</li>
+        <li>The car rotates to face the target point, with a maximum of 18 degrees.</li>
+        <li>The car's facing vector is multiplied by the given thrust value. The result is added to the current speed vector.</li>
         <li>The speed vector is added to the position of the car.</li>
         <li>The current speed vector is multiplied by 0.85</li>
         <li>The speed's values are truncated, angles converted to degrees and rounded and the position's values are rounded to the nearest integer.</li>
       </ul>
       <br>
+      Angle are provided in degrees, and relative to the x axis.
       <br>
       If you're going to run local simulations, you'll need to look at the <a href="https://github.com/Illedan/CGSearchRace">referee.</a>
     </div>
@@ -133,7 +135,7 @@
     <div class="blk">
       <div class="title">Constraints</div>
       <div class="text">
-        <const>3</const> <= <var>checkpoints</var> <= <const>8</const>
+        <const>9</const> <= <var>checkpoints</var> <= <const>24</const>
         <br>
         <const>0</const> <= <var>thrust</var> <= <const>200</const>
         <br>

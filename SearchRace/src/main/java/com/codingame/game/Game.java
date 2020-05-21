@@ -46,8 +46,9 @@ public class Game {
         car.adjust();
 
         if(!isDone) timer++;
-        if(timer == 601){
-            manager.endGame(false, 700.0);
+        if(timer == 600){
+            manager.endGame(false, 1000.0);
+            isDone = true;
         }
     }
 

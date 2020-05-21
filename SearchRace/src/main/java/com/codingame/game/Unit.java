@@ -1,7 +1,5 @@
 package com.codingame.game;
 
-import java.util.ArrayList;
-
 public abstract class Unit extends Point {
     public double vx;
     public double vy;
