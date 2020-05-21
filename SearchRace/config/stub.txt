@@ -1,7 +1,7 @@
 read checkpoints:int
 loop checkpoints read x:int y:int
 gameloop
-read checkpointId:int x:int y:int vx:int vy:int angle:int
+read checkpointIndex:int x:int y:int vx:int vy:int angle:int
 write 5000 5000 200 message
 
 STATEMENT
@@ -11,7 +11,7 @@ INPUT
 checkpoints: Count of checkpoints to read
 x: Position X
 y: Position Y
-checkpointId: Id of the checkpoint to lookup in the checkpoints input, initially 1
+checkpointIndex: Index of the checkpoint to lookup in the checkpoints input, initially 0
 x: Position X
 y: Position Y
 vx: horizontal speed. Positive is right
