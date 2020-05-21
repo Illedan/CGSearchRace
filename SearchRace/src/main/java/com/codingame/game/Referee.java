@@ -1,5 +1,4 @@
 package com.codingame.game;
-import java.util.List;
 
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
@@ -14,6 +13,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
     @Inject private GraphicEntityModule graphicEntityModule;
     @Inject private EndScreenModule endScreenModule;
     @Inject private TooltipModule tooltipModule;
+    @Inject private DebugModule debugModule;
     private Game game;
     private ViewController viewController;
     private double score;
@@ -27,7 +27,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
         String input = gameManager.getTestCaseInput().get(0);
         game = new Game(input, this);
         game.init();
-        viewController = new ViewController(graphicEntityModule, game, tooltipModule);
+        viewController = new ViewController(graphicEntityModule, game, tooltipModule, debugModule);
         viewController.init();
     }
 

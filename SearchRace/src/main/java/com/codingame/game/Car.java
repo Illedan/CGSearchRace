@@ -5,6 +5,9 @@ public class Car extends Unit {
     public String message;
     public boolean debug;
     public int thrust = 0;
+
+    public Point target;
+
     Car(double x, double y, double angle) {
         super(x, y);
         this.angle = angle;
@@ -13,6 +16,7 @@ public class Car extends Unit {
 
 
     public void handleInput(String input, IPlayerManager manager) throws Exception{
+        target = null;
         message = "";
         Car car = this;
         String[] splitted = input.split(" ");
@@ -46,6 +50,7 @@ public class Car extends Unit {
         else{
             int x = Integer.parseInt(splitted[0]);
             int y = Integer.parseInt(splitted[1]);
+            target = new Point(x, y);
             thrust = Integer.parseInt(splitted[2]);
             if(thrust < 0 || thrust > Constants.CAR_MAX_THRUST) {
                 manager.addGameSummary("Invalid thrust. Please keep between 0 and " + Constants.CAR_MAX_THRUST);

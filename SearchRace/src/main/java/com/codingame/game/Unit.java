@@ -14,6 +14,14 @@ public abstract class Unit extends Point {
         vy = 0.0;
     }
 
+    double getSpeed(){
+        return Math.sqrt(vx*vx+vy*vy);
+    }
+
+    double getSpeedAngle(){
+        return Math.atan2(vy, vx);
+    }
+
     void move(double t) {
         x += vx * t;
         y += vy * t;

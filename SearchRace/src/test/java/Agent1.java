@@ -28,9 +28,10 @@ public class Agent1 {
             Point current = new Point(x, y);
             Point in3 = new Point((int)(x+vx*3), (int)(y+vy*3));
             if(dist-in3.distance(targ) < 0 && in3.distance(current) > 150 ||z++ % 5 == 0){
-                System.out.println(targ.x + " " + targ.y + " 0");
+               System.out.println(targ.x + " " + targ.y + " 0");
+               // System.out.println("EXPERT 10 150 yolo");
             }else
-                System.out.println(targ.x + " " + targ.y + " 150");
+                System.out.println(targ.x + " " + targ.y + " 150 my message goes here? Or there?");
         }
     }
 

@@ -10,21 +10,29 @@ public class ViewController {
     private GraphicEntityModule module;
     private Game game;
     private TooltipModule tooltipModule;
+    private DebugModule debugModule;
     private Text Timer;
     private Text CheckpointTarget;
     private ArrayList<Circle> checkpoints = new ArrayList<>();
     private int currentCheck = 0;
     private Group car;
     private Group exhaust;
+    private Group carPositionGroup;
+    private Circle previousLocation;
+    private Sprite arrow;
+    private Text message;
+    private Line targetLine;
+
 
     public final int Width = 1920;
     public final int Height = 1080;
     public double Scale;
     private Random rnd = new Random();
-    public ViewController(GraphicEntityModule module, Game game, TooltipModule tooltipModule){
+    public ViewController(GraphicEntityModule module, Game game, TooltipModule tooltipModule, DebugModule debugModule){
         this.module = module;
         this.game = game;
         this.tooltipModule = tooltipModule;
+        this.debugModule = debugModule;
         Scale = Width/(double)Constants.Width;
     }
 
@@ -39,10 +47,36 @@ public class ViewController {
         module.createSprite().setImage("back.jpg")
                 .setBaseWidth(Width)
                 .setBaseHeight(Height*2);
-        car = module.createGroup()
-                .setZIndex(5)
+
+        previousLocation = module.createCircle()
+                .setRadius(getPos(300))
+                .setFillAlpha(0.0)
+                .setX(getPos(game.car.x))
+                .setY(getPos(game.car.y))
+                .setLineColor(0x000077)
+                .setLineAlpha(0.1)
+                .setAlpha(0.5)
+                .setLineWidth(5).setVisible(false);
+        debugModule.addItem(previousLocation.getId());
+        carPositionGroup = module.createGroup().setZIndex(5)
                 .setX(getPos(game.car.x))
                 .setY(getPos(game.car.y));
+
+        carPositionGroup.add(arrow = module.createSprite()
+                .setImage("Arrow.png")
+                .setAnchorY(0.5)
+                .setAnchorX(0)
+                .setZIndex(100)
+                //.setBaseWidth(getScaled(model.radius*2))
+                //.setBaseHeight(getScaled(model.radius*1.3))
+                .setAlpha(1.0)
+                .setScale(0.5)
+                .setTint(0xf5ee00).setVisible(false)
+                .setRotation(Math.PI*0.5));
+        debugModule.addItem(arrow.getId());
+
+
+        carPositionGroup.add(car = module.createGroup());
         car.add(module.createSprite().setImage("car.png")
                 .setBaseHeight(120)
                 .setBaseWidth(70)
@@ -59,7 +93,6 @@ public class ViewController {
                 .setTint(0x000000)
                 .setAlpha(0.5)
                 .setAnchor(0.5)
-                //.setRotation(Math.PI)
                 .setPlaying(true);
         exhaust.add(anim);
         module.commitEntityState(0.0, car);
@@ -84,12 +117,22 @@ public class ViewController {
             module.commitEntityState(0.0, check);
             checkpoints.add(check);
             tooltipModule.setTooltipText(checkpoints.get(checkpoints.size()-1), "Checkpoint\nx = " + (int) point.x + "\ny = " + (int) point.y);
+
+
+
         }
 
         Timer = module.createText("0")
                 .setX(10)
                 .setY(10)
                 .setAnchor(0)
+                .setFontSize(50)
+                .setFillColor(0xffffff);
+
+        message = module.createText("")
+                .setX(Width/2)
+                .setY(10)
+                .setAnchorX(0.5)
                 .setFontSize(50)
                 .setFillColor(0xffffff);
 
@@ -100,12 +143,32 @@ public class ViewController {
                 .setAnchorY(0)
                 .setFontSize(50)
                 .setFillColor(0xffffff);
+
+       // targetLine = module.createLine()
+       //         .setVisible(false)
+       //         .setZIndex(100)
+       //         .setAlpha(0.0, Curve.IMMEDIATE)
+       //         .setLineColor(0xff0000)
+       //         .setLineWidth(2);
+        //debugModule.addItem(targetLine.getId());
     }
 
     public void onRound(){
+        //if(game.car.target == null){
+        //    targetLine.setAlpha(0, Curve.IMMEDIATE);
+        //}else{
+        //    targetLine.setAlpha(1, Curve.IMMEDIATE);
+        //    targetLine.setX(carPositionGroup.getX(), Curve.IMMEDIATE)
+        //            .setY(carPositionGroup.getY(), Curve.IMMEDIATE)
+        //            .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
+        //            .setY2(getPos(game.car.target.y), Curve.IMMEDIATE);
+        //}
+
+        previousLocation.setX(carPositionGroup.getX(), Curve.IMMEDIATE).setY(carPositionGroup.getY(), Curve.IMMEDIATE);
+        message.setText(game.car.message);
         exhaust.setScale((double)(game.car.thrust+50)/200.0);
         module.commitEntityState(0, exhaust);
-        car.setX(getPos(game.car.x))
+        carPositionGroup.setX(getPos(game.car.x))
             .setY(getPos(game.car.y));
         tooltipModule.setTooltipText(car, "Car\nx = " + (int)game.car.x + "\ny = " + (int)game.car.y);
         car.setRotation(game.car.angle + Math.PI/2);
@@ -120,5 +183,9 @@ public class ViewController {
             module.commitEntityState(Math.min(1.0, game.colTime), next, prev);
             CheckpointTarget.setText(currentCheck+" ("+game.currentCheckpoint+")");
         }
+
+
+        arrow.setRotation(game.car.getSpeedAngle(), Curve.NONE);
+        arrow.setScale(0.2+0.25*game.car.getSpeed()/500);
     }
 }
