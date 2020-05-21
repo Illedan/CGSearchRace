@@ -20,7 +20,7 @@
     <div>
       <div class="statement-rules-content">
         You are controlling a car racing through a series of checkpoints. Each checkpoint is located on position indicated with <var>x</var> and <var>y</var>.
-        Which checkpoint to target is given by <var>checkpointId</var> pointing to a value in the checkpoints given as initial input.
+        Which checkpoint to target is given by <var>checkpointIndex</var> pointing to a value in the checkpoints given as initial input.
         <br>
         <br>
         Checkpoints are repeated when given as inputs. (in difference to CSB)
@@ -74,7 +74,7 @@
         <li>The speed's values are truncated, angles converted to degrees and rounded and the position's values are rounded to the nearest integer.</li>
       </ul>
       <br>
-      Angle are provided in degrees, and relative to the x axis.
+      Angle are provided in degrees, and relative to the x axis (0 degrees are pointing at (1.0). East = 0 degrees, South = 90 degrees.
       <br>
       If you're going to run local simulations, you'll need to look at the <a href="https://github.com/Illedan/CGSearchRace">referee.</a>
     </div>
@@ -139,7 +139,7 @@
         <br>
         <const>0</const> <= <var>thrust</var> <= <const>200</const>
         <br>
-        <const>-18</const> <= <var>angle</var> <= <const>18</const>
+        <const>0</const> <= <var>angle</var> <= <const>360</const>
         <br>
         <br> Response time for the first turn ≤ <const>1000</const> ms
         <br> Response time per turn ≤ <const>50</const> ms
