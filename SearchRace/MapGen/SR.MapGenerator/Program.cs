@@ -14,9 +14,9 @@ namespace SR.MapGenerator
         private static Random rnd = new Random(42);
         static void Main()
         {
-            for (var i = 1; i < 151; i++)
+            for (var i = 1; i < 401; i++)
             {
-                var test = Generate(i < 20, i < 15 ? rnd.Next(2, 8) : 8, "test" + i);
+                var test = Generate(i < 20, i < 8 ? Math.Max(3, i) : 8, "test" + i);
                 WriteTest("test" + i + ".json", test);
             }
         }
