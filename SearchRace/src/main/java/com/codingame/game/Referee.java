@@ -28,6 +28,15 @@ public class Referee extends AbstractReferee implements IPlayerManager {
         game = new Game(input, this);
         game.init();
         viewController = new ViewController(graphicEntityModule, game, tooltipModule, debugModule);
+        graphicEntityModule.createSprite()
+                .setImage(gameManager.getPlayer().getAvatarToken())
+                .setX(1920/2)
+                .setY(1080/2)
+                .setAnchor(0.5)
+                .setZIndex(0)
+                .setBaseHeight(100)
+                .setBaseWidth(100)
+        ;
         viewController.init();
     }
 

@@ -41,12 +41,11 @@ public class ViewController {
     }
 
     public void init(){
-        module.createRectangle().setFillColor(0x343434)
-                .setWidth(1920)
-                .setHeight(1080);
+
         module.createSprite().setImage("back.jpg")
                 .setBaseWidth(Width)
-                .setBaseHeight(Height*2);
+                .setBaseHeight(Height*2)
+        .setZIndex(-10);
 
         previousLocation = module.createCircle()
                 .setRadius(getPos(300))
@@ -105,7 +104,7 @@ public class ViewController {
                     .setLineAlpha(0.2)
                     .setLineWidth(2)
                     .setLineColor(0x343434)
-                    .setFillAlpha(0.3);
+                    .setFillAlpha(0.3).setZIndex(1);
             module.createText(String.valueOf(id++))
                     .setX(getPos(point.x))
                     .setY(getPos(point.y))
@@ -117,7 +116,6 @@ public class ViewController {
             module.commitEntityState(0.0, check);
             checkpoints.add(check);
             tooltipModule.setTooltipText(checkpoints.get(checkpoints.size()-1), "Checkpoint\nx = " + (int) point.x + "\ny = " + (int) point.y);
-
 
 
         }
