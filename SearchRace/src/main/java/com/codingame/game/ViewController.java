@@ -163,7 +163,7 @@ public class ViewController {
         //            .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
         //            .setY2(getPos(game.car.target.y), Curve.IMMEDIATE);
         //}
-
+        drawSkidMark(carPositionGroup.getX(), carPositionGroup.getY(), getPos(game.car.x), getPos(game.car.y), game.car.angle, game.car.prevAngle);
         previousLocation.setX(carPositionGroup.getX(), Curve.IMMEDIATE).setY(carPositionGroup.getY(), Curve.IMMEDIATE);
         message.setText(game.car.message);
         exhaust.setScale((double)(game.car.thrust+50)/200.0);
@@ -187,5 +187,49 @@ public class ViewController {
 
         arrow.setRotation(game.car.getSpeedAngle(), Curve.NONE);
         arrow.setScale(0.2+0.25*game.car.getSpeed()/500);
+    }
+
+    private double skidStrength;
+    private double wheelAngleDist = Math.PI / 10*2;
+    public static double angleDist(double alpha, double beta) {
+        double phi = Math.abs(beta - alpha) % (Math.PI*2);
+        double distance = phi > Math.PI ? (Math.PI*2) - phi : phi;
+        return distance;
+    }
+
+    private void drawSkidMark(int x0, int y0, int x1, int y1, double angle, double prevAngle){
+        // height 50 and 10 degrees of angle on all 4 sides
+        double speedAngle = game.car.getSpeedAngle();
+        double diff = angleDist(angle, speedAngle);
+
+
+        double wheelDist = 50;
+        //skidStrength = 1;
+        //drawSkid(x1, y1, x1+Math.cos(angle)*wheelDist, y1+Math.sin(angle)*wheelDist);
+        skidStrength = (diff)/Math.PI*Math.min(0.5, game.car.getSpeed()/600.0);
+        prevAngle += wheelAngleDist;
+        angle += wheelAngleDist;
+        drawSkid(x0+Math.cos(prevAngle)*wheelDist, y0+Math.sin(prevAngle)*wheelDist, x1+Math.cos(angle)*wheelDist, y1+Math.sin(angle)*wheelDist);
+        prevAngle -= wheelAngleDist*2;
+        angle -= wheelAngleDist*2;
+        drawSkid(x0+Math.cos(prevAngle)*wheelDist, y0+Math.sin(prevAngle)*wheelDist, x1+Math.cos(angle)*wheelDist, y1+Math.sin(angle)*wheelDist);
+        prevAngle += Math.PI;
+        angle += Math.PI;
+        drawSkid(x0+Math.cos(prevAngle)*wheelDist, y0+Math.sin(prevAngle)*wheelDist, x1+Math.cos(angle)*wheelDist, y1+Math.sin(angle)*wheelDist);
+        prevAngle += wheelAngleDist*2;
+        angle += wheelAngleDist*2;
+        drawSkid(x0+Math.cos(prevAngle)*wheelDist, y0+Math.sin(prevAngle)*wheelDist, x1+Math.cos(angle)*wheelDist, y1+Math.sin(angle)*wheelDist);
+    }
+
+    private void drawSkid(double x, double y, double x2, double y2){
+        module.createLine()
+                .setLineWidth(8)
+                .setLineAlpha(skidStrength, Curve.IMMEDIATE)
+                .setZIndex(3)
+                .setLineColor(0x000000)
+                .setX((int)Math.round(x))
+                .setY((int)Math.round(y))
+                .setX2((int)Math.round(x2))
+                .setY2((int)Math.round(y2));
     }
 }

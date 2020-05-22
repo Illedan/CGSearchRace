@@ -1,7 +1,7 @@
 package com.codingame.game;
 
 public class Car extends Unit {
-    public double angle;
+    public double angle, prevAngle;
     public String message;
     public boolean debug;
     public int thrust = 0;
@@ -16,6 +16,7 @@ public class Car extends Unit {
 
 
     public void handleInput(String input, IPlayerManager manager) throws Exception{
+        prevAngle = angle;
         target = null;
         message = "";
         Car car = this;
@@ -38,7 +39,7 @@ public class Car extends Unit {
             if(splitted.length > 3){
                 int totalLength = ("EXPERT " +angle+" "+thrust+" ").length();
                 car.message = input.substring(totalLength);
-
+                findDebugLines(car.message);
                 if(car.message.length() > 20){
                     car.message = car.message.substring(0, 20);
                 }
@@ -61,6 +62,7 @@ public class Car extends Unit {
             if(splitted.length > 3){
                 int totalLength = (x+" "+y+" "+thrust+" ").length();
                 car.message = input.substring(totalLength);
+                findDebugLines(car.message);
                 if(car.message.length() > 20){
                     car.message = car.message.substring(0, 20);
                 }
@@ -72,6 +74,14 @@ public class Car extends Unit {
         if(car.message.contains("debug")){
             debug = true;
         }
+    }
+
+    private void findDebugLines(String message){
+        //Format: DEBUG_LINES: { x0 y0 x1 y1, x0 y0 x1 y1 }
+        if(!message.trim().startsWith("DEBUG_LINES:")){
+            return;
+        }
+        // TODO:
     }
 
     public void handleExpertInput(int angle, int thrust){

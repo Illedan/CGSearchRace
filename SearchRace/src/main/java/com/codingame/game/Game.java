@@ -21,7 +21,7 @@ public class Game {
             checkpoints.add(new Checkpoint(Integer.parseInt(splitted[0]), Integer.parseInt( splitted[1])));
         }
         car = new Car(checkpoints.get(0).x, checkpoints.get(0).y, 0);
-        car.angle = car.getAngle(checkpoints.get(1));
+        car.angle = car.prevAngle = car.getAngle(checkpoints.get(1));
         car.adjust();
 
         this.manager = manager;
@@ -46,17 +46,20 @@ public class Game {
         car.adjust();
 
         if(!isDone) timer++;
-        if(timer == 600){
+        if(timer == 600 && !isDone){
             manager.endGame(false, 1000.0);
             isDone = true;
         }
     }
 
     private void checkCollisions(){
-        if(!isDone){
+        boolean hasCollided = true;
+        while(!isDone && hasCollided){
+            hasCollided = false;
             colTime = 2.0;
             Collision col = car.getCollision(getNextCheckpoint(), Constants.CheckpointRadius);
             if(col.time >= 0.0 && col.time <= 1.0){
+                hasCollided = true;
                 currentCheckpoint++;
                 colTime = col.time;
                 if(currentCheckpoint >= totalCheckpoints){
