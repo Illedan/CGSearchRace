@@ -1,5 +1,5 @@
 read checkpoints:int
-loop checkpoints read x:int y:int
+loop checkpoints read checkpointX:int checkpointY:int
 gameloop
 read checkpointIndex:int x:int y:int vx:int vy:int angle:int
 write 5000 5000 200 message
@@ -9,8 +9,8 @@ Made by Illedan
 
 INPUT
 checkpoints: Count of checkpoints to read
-x: Position X
-y: Position Y
+checkpointX: Position X
+checkpointY: Position Y
 checkpointIndex: Index of the checkpoint to lookup in the checkpoints input, initially 0
 x: Position X
 y: Position Y
