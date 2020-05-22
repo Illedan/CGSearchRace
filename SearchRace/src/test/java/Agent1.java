@@ -27,7 +27,7 @@ public class Agent1 {
 
             Point current = new Point(x, y);
             Point in3 = new Point((int)(x+vx*3), (int)(y+vy*3));
-            System.out.println(7000+ " " + 4500 + " 200");
+            System.out.println(7000+ " " + 4500 + " 200 is long long long long long teahraeawhe|| lOLLOLOL || gewagewageaw || aw yeaw h eaw h aew haw h");
 
         }
     }

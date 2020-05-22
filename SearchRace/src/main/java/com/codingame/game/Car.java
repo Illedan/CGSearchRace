@@ -40,9 +40,6 @@ public class Car extends Unit {
                 int totalLength = ("EXPERT " +angle+" "+thrust+" ").length();
                 car.message = input.substring(totalLength);
                 findDebugLines(car.message);
-                if(car.message.length() > 20){
-                    car.message = car.message.substring(0, 20);
-                }
             }else{
                 car.message="";
             }
@@ -63,9 +60,6 @@ public class Car extends Unit {
                 int totalLength = (x+" "+y+" "+thrust+" ").length();
                 car.message = input.substring(totalLength);
                 findDebugLines(car.message);
-                if(car.message.length() > 20){
-                    car.message = car.message.substring(0, 20);
-                }
             }else{
                 car.message="";
             }

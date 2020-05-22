@@ -47,6 +47,7 @@ public class ViewController {
                 .setBaseHeight(Height*2)
         .setZIndex(-10);
 
+
         previousLocation = module.createCircle()
                 .setRadius(getPos(300))
                 .setFillAlpha(0.0)
@@ -142,25 +143,23 @@ public class ViewController {
                 .setFontSize(50)
                 .setFillColor(0xffffff);
 
-       // targetLine = module.createLine()
-       //         .setVisible(false)
-       //         .setZIndex(100)
-       //         .setAlpha(0.0, Curve.IMMEDIATE)
-       //         .setLineColor(0xff0000)
-       //         .setLineWidth(2);
-        //debugModule.addItem(targetLine.getId());
     }
 
     public void onRound(){
-        //if(game.car.target == null){
-        //    targetLine.setAlpha(0, Curve.IMMEDIATE);
-        //}else{
-        //    targetLine.setAlpha(1, Curve.IMMEDIATE);
-        //    targetLine.setX(carPositionGroup.getX(), Curve.IMMEDIATE)
-        //            .setY(carPositionGroup.getY(), Curve.IMMEDIATE)
-        //            .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
-        //            .setY2(getPos(game.car.target.y), Curve.IMMEDIATE);
-        //}
+        if(game.car.target != null && false){ // some bug leaving lines when scrolling back in time..
+            Line l = module.createLine().setX(carPositionGroup.getX(), Curve.IMMEDIATE)
+                    .setY(carPositionGroup.getY(), Curve.IMMEDIATE)
+                    .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
+                    .setY2(getPos(game.car.target.y), Curve.IMMEDIATE)
+                    .setZIndex(100)
+                    .setLineColor(0xff0000)
+                    .setVisible(false)
+                    .setLineWidth(2);
+            module.commitEntityState(0, l);
+            l.setLineAlpha(0, Curve.NONE).setAlpha(0, Curve.NONE);
+            module.commitEntityState(1, l);
+            debugModule.addItem(l.getId());
+        }
         drawSkidMark(carPositionGroup.getX(), carPositionGroup.getY(), getPos(game.car.x), getPos(game.car.y), game.car.angle, game.car.prevAngle);
         previousLocation.setX(carPositionGroup.getX(), Curve.IMMEDIATE).setY(carPositionGroup.getY(), Curve.IMMEDIATE);
         message.setText(game.car.message);
