@@ -42,7 +42,6 @@ public class Game {
         String input = manager.getOutputs();
         car.handleInput(input, manager);
         checkCollisions();
-        car.move(1.0);
         car.adjust();
 
         if(!isDone) timer++;
@@ -54,19 +53,23 @@ public class Game {
 
     private void checkCollisions(){
         boolean hasCollided = true;
+        double t = 0.0;
+        colTime = 2.0;
         while(!isDone && hasCollided){
             hasCollided = false;
-            colTime = 2.0;
             Collision col = car.getCollision(getNextCheckpoint(), Constants.CheckpointRadius);
-            if(col.time >= 0.0 && col.time <= 1.0){
+            if(col.time >= 0.0 && col.time + t <= 1.0){
                 hasCollided = true;
                 currentCheckpoint++;
-                colTime = col.time;
+                t += col.time;
+                colTime = t;
+                car.move(col.time);
                 if(currentCheckpoint >= totalCheckpoints){
                     isDone = true;
                 }
             }
         }
+        car.move(1.0-t);
     }
 
     private String[] getInitialData(){

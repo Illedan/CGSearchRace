@@ -62,6 +62,7 @@ public class Referee extends AbstractReferee implements IPlayerManager {
         catch (Exception e){
             endGame(false, 1000);
             addGameSummary(e.getMessage());
+            addTooltip("Provided invalid input. Check Summary for details.");
         }
     }
 

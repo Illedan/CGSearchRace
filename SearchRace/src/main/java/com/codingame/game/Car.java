@@ -23,8 +23,13 @@ public class Car extends Unit {
         String[] splitted = input.split(" ");
 
         if(splitted[0].equals("EXPERT")){
-            int angle = Integer.parseInt(splitted[1]);
-            thrust = Integer.parseInt(splitted[2]);
+            int angle;
+            try {
+                angle = Integer.parseInt(splitted[1]);
+                thrust = Integer.parseInt(splitted[2]);
+            }catch (Exception e){
+                throw new Exception("Can't parse expert input integers. " + e.getMessage());
+            }
             if(thrust < 0 || thrust > Constants.CAR_MAX_THRUST) {
                 manager.addGameSummary("Invalid thrust. Please keep between 0 and " + Constants.CAR_MAX_THRUST);
                 throw new Exception( "Invalid thrust");
@@ -46,10 +51,18 @@ public class Car extends Unit {
 
         }
         else{
-            int x = Integer.parseInt(splitted[0]);
-            int y = Integer.parseInt(splitted[1]);
-            target = new Point(x, y);
-            thrust = Integer.parseInt(splitted[2]);
+            int x;
+            int y;
+
+            try{
+                x = Integer.parseInt(splitted[0]);
+                y = Integer.parseInt(splitted[1]);
+                target = new Point(x, y);
+                thrust = Integer.parseInt(splitted[2]);
+            }catch (Exception e){
+                throw new Exception("Can't parse action. Has to be X Y THRURST. " + e.getMessage());
+            }
+
             if(thrust < 0 || thrust > Constants.CAR_MAX_THRUST) {
                 manager.addGameSummary("Invalid thrust. Please keep between 0 and " + Constants.CAR_MAX_THRUST);
                 throw new Exception( "Invalid thrust");

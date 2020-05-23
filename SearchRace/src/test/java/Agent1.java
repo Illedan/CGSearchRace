@@ -26,9 +26,11 @@ public class Agent1 {
             Point targ = targets.get(target);
 
             Point current = new Point(x, y);
-            Point in3 = new Point((int)(x+vx*3), (int)(y+vy*3));
-            System.out.println(7000+ " " + 4500 + " 200 is long long long long long teahraeawhe|| lOLLOLOL || gewagewageaw || aw yeaw h eaw h aew haw h");
-
+            int thrust = 200;
+            if(targ.distance(current) < 2000){
+                thrust = 50;
+            }
+            System.out.println(targ.x+ " " + targ.y + " " + thrust);
         }
     }
 
