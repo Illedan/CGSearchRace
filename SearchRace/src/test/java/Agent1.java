@@ -30,7 +30,7 @@ public class Agent1 {
             if(targ.distance(current) < 2000){
                 thrust = 50;
             }
-            System.out.println(targ.x+ " " + targ.y + " " + thrust);
+            System.out.println(10000+ " " + 4000 + " " + thrust);
         }
     }
 

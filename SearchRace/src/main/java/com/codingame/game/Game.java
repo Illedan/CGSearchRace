@@ -64,6 +64,7 @@ public class Game {
                 t += col.time;
                 colTime = t;
                 car.move(col.time);
+                manager.addGameSummary("Collision Time: " + t);
                 if(currentCheckpoint >= totalCheckpoints){
                     isDone = true;
                 }

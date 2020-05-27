@@ -21,7 +21,7 @@ public class ViewController {
     private Circle previousLocation;
     private Sprite arrow;
     private Text message;
-    private Line targetLine;
+    private Group debugGroup;
 
 
     public final int Width = 1920;
@@ -118,7 +118,8 @@ public class ViewController {
             checkpoints.add(check);
             tooltipModule.setTooltipText(checkpoints.get(checkpoints.size()-1), "Checkpoint\nx = " + (int) point.x + "\ny = " + (int) point.y);
 
-
+            debugGroup = module.createGroup();
+            debugModule.addItem(debugGroup.getId());
         }
 
         Timer = module.createText("0")
@@ -146,19 +147,17 @@ public class ViewController {
     }
 
     public void onRound(){
-        if(game.car.target != null && false){ // some bug leaving lines when scrolling back in time..
+        if(game.car.target != null){
             Line l = module.createLine().setX(carPositionGroup.getX(), Curve.IMMEDIATE)
                     .setY(carPositionGroup.getY(), Curve.IMMEDIATE)
                     .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
                     .setY2(getPos(game.car.target.y), Curve.IMMEDIATE)
                     .setZIndex(100)
                     .setLineColor(0xff0000)
-                    .setVisible(false)
                     .setLineWidth(2);
             module.commitEntityState(0, l);
-            l.setLineAlpha(0, Curve.NONE).setAlpha(0, Curve.NONE);
+            l.setLineAlpha(0, Curve.NONE).setAlpha(0, Curve.NONE).setVisible(false);
             module.commitEntityState(1, l);
-            debugModule.addItem(l.getId());
         }
         drawSkidMark(carPositionGroup.getX(), carPositionGroup.getY(), getPos(game.car.x), getPos(game.car.y), game.car.angle, game.car.prevAngle);
         previousLocation.setX(carPositionGroup.getX(), Curve.IMMEDIATE).setY(carPositionGroup.getY(), Curve.IMMEDIATE);
@@ -181,9 +180,8 @@ public class ViewController {
             CheckpointTarget.setText(currentCheck+" ("+game.currentCheckpoint+")");
         }
 
-
         arrow.setRotation(game.car.getSpeedAngle(), Curve.NONE);
-        arrow.setScale(0.2+0.25*game.car.getSpeed()/500);
+        arrow.setScale(0.2+0.25*game.car.getSpeed()/300);
     }
 
     private double skidStrength;
