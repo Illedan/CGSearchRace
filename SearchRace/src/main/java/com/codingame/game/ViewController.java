@@ -21,7 +21,7 @@ public class ViewController {
     private Circle previousLocation;
     private Sprite arrow;
     private Text message;
-    private Group debugGroup;
+    private Line targetLine;
 
 
     public final int Width = 1920;
@@ -117,10 +117,8 @@ public class ViewController {
             module.commitEntityState(0.0, check);
             checkpoints.add(check);
             tooltipModule.setTooltipText(checkpoints.get(checkpoints.size()-1), "Checkpoint\nx = " + (int) point.x + "\ny = " + (int) point.y);
-
-            debugGroup = module.createGroup();
-            debugModule.addItem(debugGroup.getId());
         }
+
 
         Timer = module.createText("0")
                 .setX(10)
@@ -144,20 +142,22 @@ public class ViewController {
                 .setFontSize(50)
                 .setFillColor(0xffffff);
 
+        targetLine =  module.createLine().setZIndex(100)
+                .setLineColor(0xff0000)
+                .setLineWidth(2);
+        debugModule.addItem(targetLine.getId());
     }
 
     public void onRound(){
         if(game.car.target != null){
-            Line l = module.createLine().setX(carPositionGroup.getX(), Curve.IMMEDIATE)
+            targetLine.setX(carPositionGroup.getX(), Curve.IMMEDIATE)
                     .setY(carPositionGroup.getY(), Curve.IMMEDIATE)
                     .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
                     .setY2(getPos(game.car.target.y), Curve.IMMEDIATE)
-                    .setZIndex(100)
-                    .setLineColor(0xff0000)
-                    .setLineWidth(2);
-            module.commitEntityState(0, l);
-            l.setLineAlpha(0, Curve.NONE).setAlpha(0, Curve.NONE).setVisible(false);
-            module.commitEntityState(1, l);
+                    .setAlpha(1.0, Curve.IMMEDIATE);
+        }
+        else{
+            targetLine.setAlpha(0, Curve.IMMEDIATE);
         }
         drawSkidMark(carPositionGroup.getX(), carPositionGroup.getY(), getPos(game.car.x), getPos(game.car.y), game.car.angle, game.car.prevAngle);
         previousLocation.setX(carPositionGroup.getX(), Curve.IMMEDIATE).setY(carPositionGroup.getY(), Curve.IMMEDIATE);
