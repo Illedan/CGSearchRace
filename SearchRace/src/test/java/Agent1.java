@@ -30,10 +30,10 @@ public class Agent1 {
             if(targ.distance(current) < 2000){
                 thrust = 50;
             }
-            if(vx < 0)
-                System.out.println("EXPERT 18 200");
-            else
-                System.out.println((targ.x-vx)+ " " + (targ.y-vy) + " " + thrust);
+           // if(vx < 0)
+            //    System.out.println("EXPERT 18 200");
+            //else
+                System.out.println(10000+ " " + 4000 + " " + thrust);
         }
     }
 

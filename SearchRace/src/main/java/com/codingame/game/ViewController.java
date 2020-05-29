@@ -144,17 +144,26 @@ public class ViewController {
 
         targetLine =  module.createLine().setZIndex(100)
                 .setLineColor(0xff0000)
-                .setLineWidth(2);
+                .setLineWidth(2).setAlpha(0.0, Curve.IMMEDIATE);
         debugModule.addItem(targetLine.getId());
     }
 
+    private boolean lineHack;
     public void onRound(){
         if(game.car.target != null){
+            if(lineHack)
             targetLine.setX(carPositionGroup.getX(), Curve.IMMEDIATE)
                     .setY(carPositionGroup.getY(), Curve.IMMEDIATE)
                     .setX2(getPos(game.car.target.x), Curve.IMMEDIATE)
                     .setY2(getPos(game.car.target.y), Curve.IMMEDIATE)
                     .setAlpha(1.0, Curve.IMMEDIATE);
+            else
+                targetLine.setX2(carPositionGroup.getX(), Curve.IMMEDIATE)
+                        .setY2(carPositionGroup.getY(), Curve.IMMEDIATE)
+                        .setX(getPos(game.car.target.x), Curve.IMMEDIATE)
+                        .setY(getPos(game.car.target.y), Curve.IMMEDIATE)
+                        .setAlpha(1.0, Curve.IMMEDIATE);
+            lineHack = !lineHack;
         }
         else{
             targetLine.setAlpha(0, Curve.IMMEDIATE);
